@@ -1,25 +1,23 @@
 import './App.scss'
 import { useState } from 'react'
-import { Tabs } from './components/Tabs'
+import { Button } from './components/Button'
 import { CodeEditor } from './components/CodeEditor'
 import { CodeExecutor } from './components/CodeExecutor'
 import server from "./server.json";
 
-const initialCode = 'puts "Hello World"';
-
+const initialCode =""
 
 export default function App() {
   const [mode, setMode] = useState('ruby');
   const [code, setCode] = useState(initialCode);
-  const [codeResult, setcodeResult] = useState('');
-  const [testMsg, setTestMsg] = useState('');
+  const [codeResult, setCodeResult] = useState('');
   const [task, setTask] = useState('hello_world.rb');
-
+  
   const runCode = () => {
 
     const data = {
         rubyCode: code,
-        pathTest: item.product_id
+        path: task
     }
 
     const requestOptions = {
@@ -37,9 +35,20 @@ export default function App() {
         (result) => {
           console.log(result);
           if (result[0].msg == "success"){
-            //вывод исполнения кода
-          } else {
-            //вывод сообщений теста
+            if (result[1].msg == "success"){
+              console.log(result[1].codeResult)
+              if(result[1].codeResult === ''){
+                console.log("sadsad")
+                console.log(result[0].testResult)
+                setCodeResult(result[0].testResult)
+              } else {
+                setCodeResult(result[1].codeResult)
+              }
+            } else {
+              setCodeResult("Ошибка в коде. Т.к. он прошел тест, то возможна ошибка в тесте");
+            }
+          } else {          
+            setCodeResult(result[0].testResult)
           }
         },      
         (error) => {
@@ -48,20 +57,61 @@ export default function App() {
       );
   }
   
+  const saveFile = () => {
+    const data = {
+      rubyCode: code,
+      path: task,
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch(`${server.host}:${server.port}/saveFile`, requestOptions)
+      .then((res) => {
+        console.log(res)
+        return res.json()})
+      .then(
+        (result) => {
+          console.log(result)
+          // if(result.result == "success"){
+            console.log("Сохранено");
+          // } else {
+            alert(result)
+          // }
+        },      
+        (error) => {
+          console.log(error)
+          alert(error);
+        }
+      );
+  };
+
   const propsByMode = {
     ruby: {
       mode: 'ruby',
       value: code,
-      setValue: setCode
+      setValue: setCode,
+      setFile: setTask
     }
   }
 
   return (
     <div className='app'>
-      <h1>React Code Editor</h1>
-      <Tabs mode={mode} setMode={setMode} />
+      <h1>React Code Editor</h1>      
+      <Button
+        className='btn file'
+        title='Save file'
+        onClick={saveFile}
+      />
       <CodeEditor {...propsByMode[mode]} />
-      <CodeExecutor  runCode={runCode} />
+      <Button className='btn run' title='Run code' onClick={runCode} />
+      <CodeExecutor  srcDoc={codeResult} />
     </div>
   )
 }

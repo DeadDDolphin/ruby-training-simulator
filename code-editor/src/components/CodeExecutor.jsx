@@ -1,8 +1,7 @@
 import { Button } from './Button'
 
-export const CodeExecutor = ({ srcDoc, runCode }) => (
+export const CodeExecutor = ({srcDoc}) => (
   <div className='code-executor'>
-    <Button className='btn run' title='Run code' onClick={runCode} />
     <iframe
       srcDoc={srcDoc}
       title='output'

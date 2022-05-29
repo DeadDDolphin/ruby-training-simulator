@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Controlled } from 'react-codemirror2'
 import { Button } from './Button'
 import { ThemeSelector } from './ThemeSelector'
+import { FileSelector } from './FileSelector'
 
 import 'codemirror/lib/codemirror.css'
 
@@ -24,22 +25,30 @@ import "codemirror/addon/comment/continuecomment.js";
 import "codemirror/addon/mode/simple.js";
 import "codemirror/addon/hint/show-hint.js";
 
-export const CodeEditor = ({ mode, value, setValue }) => {
+export const CodeEditor = ({ mode, value, setValue, setFile }) => {
   const [theme, setTheme] = useState('dracula')
+
   const fileInputRef = useRef()
+  
 
   const changeCode = (editor, data, value) => {
     setValue(value)
   }
 
-  const isFileValid = (file) =>
-    (file.name.split(".")[1] === "rb")
+  const isFileValid = (file) =>{
+    try {
+      return (file.name.split(".")[1] === "rb") || (file.split(".")[1] === "rb")
+    } catch (TypeError) {
+      return (file.split(".")[1] === "rb")
+    }
+  }
+    
 
   const readFile = (file) => {
     if (!isFileValid(file)) return
-
+    setFile(file.name);
     const reader = new FileReader()
-
+    
     reader.onloadend = () => {
       setValue(reader.result)
     }
@@ -60,10 +69,11 @@ export const CodeEditor = ({ mode, value, setValue }) => {
 
     readFile(file)
   }
-
+  
   return (
     <div className='code-editor'>
-      <ThemeSelector setTheme={setTheme} />
+      <ThemeSelector setTheme={setTheme} />      
+      {/* <FileSelector readFile={readFile}/> */}
       <Button
         className='btn file'
         title='Load file'
@@ -73,7 +83,7 @@ export const CodeEditor = ({ mode, value, setValue }) => {
       />
       <input
         type='file'
-        accept='text/ruby'
+        accept='.rb'
         style={{ display: 'none' }}
         aria-hidden='true'
         ref={fileInputRef}

@@ -10,7 +10,8 @@
     "codemirror": "^5.65.0",
     "react": "^16.0.2",
     "react-codemirror2": "^7.2.1",
-    "react-dom": "^16.0.2"
+    "react-dom": "^16.0.2",
+    "yarn": "^1.22.18"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
