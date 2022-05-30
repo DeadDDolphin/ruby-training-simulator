@@ -115,13 +115,16 @@ $dark: #292b2c;
     }
   }
 
-  iframe {
+  .iframe {
     height: 460px;
     padding: 0.25rem;
     width: 700px;
     border: 1px dashed $dark;
     border-radius: 4px;
+    white-space: pre-wrap;
+    overflow-y: auto;
   }
+
 }
 
 

@@ -8,7 +8,7 @@ def min(arr)
   end
   
   def max(arr)
-    arr.reduce(0){|m, el| m = el if m < el}
+    arr.max
   end
   
   def summ(arr)
