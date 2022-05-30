@@ -19,11 +19,11 @@ async function runMethodByParam(param, data) {
 
     }
 
-    function getFiles (dirPath, callback) {
+    async function getFiles (dirPath, callback) {
 
         var filePaths = [];
 
-        fs.readdir(dirPath, function (err, files) {
+        await fs.readdir(dirPath, function (err, files) {
             if (err) return callback(err);
     
             
@@ -71,32 +71,38 @@ async function runMethodByParam(param, data) {
         const pathScripts = "./../ruby-scripts/";
         const fullPath = path.join(pathScripts, dir);
 
-        const filePaths = getFiles(fullPath, function (err, files) {
+        const filePaths = await getFiles(fullPath, function (err, files) {
             console.log(err || files);
-        });
 
-        
-        const lastIndex = Math.max(filePaths.map(p => {
-            return p.split("\\")[-1]
-        }));
+            const newArr = files.map((p) => {
+                return Number(p.split("\\").slice(-1)[0].split(".")[0].split("_").slice(-1)[0]);
+            })
 
-        
-        var result = {
-            result: "success",
-        };
-        
-          
-        const name = path.join(fullPath,`${removeLastNumber(data.path)}_${lastIndex+1}.rb`);
-        const writedData = new Uint8Array(Buffer.from(data.rubyCode));
-        fs.writeFile(name, writedData, (error) => {
-          if (error) {
-            result = {
-              result: "error",
+
+            const lastIndex = Math.max.apply(Math, newArr);
+
+
+            var result = {
+                result: "success",
             };
-          }
+
+            const name = path.join(
+                fullPath,
+                `${removeLastNumber(data.path)}_${lastIndex + 1}.rb`
+            );
+            const writedData = new Uint8Array(Buffer.from(data.rubyCode));
+            fs.writeFile(name, writedData, (error) => {
+                if (error) {
+                    result = {
+                        result: "error",
+                    };
+                }
+            });
+            console.log(result);
+            return result;
         });
-        console.log(result);
-        return result;
+
+        return {result: "files not loaded"}
     }
 
     async function getFileNames() {
