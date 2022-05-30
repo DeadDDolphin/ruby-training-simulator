@@ -74,21 +74,7 @@ export const CodeEditor = ({ mode, value, setValue, setFile }) => {
     <div className='code-editor'>
       <ThemeSelector setTheme={setTheme} />      
       {/* <FileSelector readFile={readFile}/> */}
-      <Button
-        className='btn file'
-        title='Load file'
-        onClick={() => {
-          fileInputRef.current.click()
-        }}
-      />
-      <input
-        type='file'
-        accept='.rb'
-        style={{ display: 'none' }}
-        aria-hidden='true'
-        ref={fileInputRef}
-        onChange={loadFile}
-      />
+      
       <Controlled
         value={value}
         onBeforeChange={changeCode}
@@ -103,6 +89,21 @@ export const CodeEditor = ({ mode, value, setValue, setFile }) => {
           autoCloseBrackets: true,
           matchBrackets: true
         }}
+      />
+      <Button
+        className='btn file'
+        title='Load file'
+        onClick={() => {
+          fileInputRef.current.click()
+        }}
+      />
+      <input
+        type='file'
+        accept='.rb'
+        style={{ display: 'none' }}
+        aria-hidden='true'
+        ref={fileInputRef}
+        onChange={loadFile}
       />
     </div>
   )

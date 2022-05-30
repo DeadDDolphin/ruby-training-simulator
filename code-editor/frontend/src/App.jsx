@@ -103,15 +103,19 @@ export default function App() {
 
   return (
     <div className='app'>
-      <h1>React Code Editor</h1>      
+      <h1>Тренажер для Ruby</h1>
+      <div className='main-container'>
+      <div className='editor-container'>
+      <CodeEditor {...propsByMode[mode]} />
       <Button
         className='btn file'
         title='Save file'
         onClick={saveFile}
       />
-      <CodeEditor {...propsByMode[mode]} />
       <Button className='btn run' title='Run code' onClick={runCode} />
+      </div>
       <CodeExecutor  srcDoc={codeResult} />
+      </div>
     </div>
   )
 }

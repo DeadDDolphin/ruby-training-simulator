@@ -41,7 +41,7 @@ $dark: #292b2c;
 .app {
   @include flex-center(true);
   margin: 0 auto;
-  max-width: 600px;
+  // max-width: 600px;
 
   h1 {
     margin: 1rem 0;
@@ -79,7 +79,7 @@ $dark: #292b2c;
   }
 
   .code-editor {
-    width: 100%;
+    width: 700px;
 
     .CodeMirror-wrap {
       border-radius: 4px;
@@ -88,6 +88,7 @@ $dark: #292b2c;
   }
 
   .code-executor {
+    padding-top: 47px;
     width: 100%;
   }
 
@@ -115,8 +116,24 @@ $dark: #292b2c;
 
   iframe {
     padding: 0.25rem;
-    width: 100%;
+    width: 700px;
     border: 1px dashed $dark;
     border-radius: 4px;
   }
+}
+
+
+.main-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.editor-container{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-right: 2rem;
 }
