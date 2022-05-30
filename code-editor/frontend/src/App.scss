@@ -84,6 +84,7 @@ $dark: #292b2c;
     .CodeMirror-wrap {
       border-radius: 4px;
       padding: 0.25rem;
+      height: 450px
     }
   }
 
@@ -115,6 +116,7 @@ $dark: #292b2c;
   }
 
   iframe {
+    height: 460px;
     padding: 0.25rem;
     width: 700px;
     border: 1px dashed $dark;

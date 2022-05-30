@@ -78,11 +78,9 @@ export default function App() {
         return res.json()})
       .then(
         (result) => {
-          console.log(result)
           // if(result.result == "success"){
             console.log("Сохранено");
           // } else {
-            alert(result)
           // }
         },      
         (error) => {
