@@ -1,4 +1,4 @@
-require_relative './../ruby-scripts/task4/task4_0.rb'
+require_relative './../ruby-scripts/task4/task4_2.rb'
 
 
 describe "Solution" do

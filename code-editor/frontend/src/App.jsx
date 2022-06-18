@@ -38,7 +38,6 @@ export default function App() {
             if (result[1].msg == "success"){
               console.log(result[1].codeResult)
               if(result[1].codeResult === ''){
-                console.log("sadsad")
                 console.log(result[0].testResult)
                 setCodeResult(result[0].testResult)
               } else {

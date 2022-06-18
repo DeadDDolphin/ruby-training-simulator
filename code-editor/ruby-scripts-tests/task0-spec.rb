@@ -6,4 +6,4 @@ describe "Solution" do
         message = hi
         expect(message).to eq "Hello World!"
     end
-  end
+end

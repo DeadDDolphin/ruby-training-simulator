@@ -2,10 +2,8 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-// const { async } = require('jshint/src/prod-params');
 const backMethods = require('./backMethods.js');
 
-const PORT = process.env.PORT || 3001;
 
 //отключаем запрет на кросдоменные запросы
 app.use(cors());
@@ -34,10 +32,6 @@ app.post("/saveFile", async (req, res, next) => {
   console.log(result);
   res.json(result);
 })
-
-app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
-});
 
 
 app.get("/getFileNames", async (req, res, next) =>{
